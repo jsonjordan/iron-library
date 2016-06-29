@@ -96,9 +96,10 @@ ActiveRecord::Schema.define(version: 20160629173944) do
     t.datetime "updated_at",                          null: false
     t.string   "slack_name"
     t.string   "gmail_id"
-    t.string   "type"
+    t.string   "permission",                  default: "student"
     t.string   "klass"
     t.integer  "campus_id"
+    t.string   "name"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

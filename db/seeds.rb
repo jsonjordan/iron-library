@@ -5,3 +5,13 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+
+cam = Campus.new(city: "Durham")
+cam.save(:validate => false)
+
+user1 = cam.users.new(name: "Jason Jordan", email: "jj@example.com", password: "hunter2", slack_name: "jason.jordan", klass: "Ruby on Rails")
+user1.save(:validate => false)
+
+user2 = cam.users.new(name: "Robyn Pickering", email: "rp@example.com", password: "hunter2", slack_name: "r.pickering", klass: "Front End")
+user2.save(:validate => false)
