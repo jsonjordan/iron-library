@@ -5,7 +5,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   validates_presence_of :slack_name,
-                        :gmail_id,
                         :type,
                         :klass,
                         :campus_id
