@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     resources :purchase_requests, shallow: true
   end
 
-  resources :users, shallow: true do
+  resources :users, only: [:show, :index] do
     resources :reservations, shallow: true
   end
 

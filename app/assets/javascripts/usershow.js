@@ -3,10 +3,9 @@ $(document).on("page:change", function() {
   var userInfo = $("#user-info")
   var userId = currentUser.data('user-id')
 
-  getUser(currentUser, userInfo, userId)
-
-
-
+  if($('body').is('.UserShow')) {
+    getUser(currentUser, userInfo, userId)
+  }
 
 })
 

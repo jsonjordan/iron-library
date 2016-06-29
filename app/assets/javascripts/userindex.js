@@ -1,10 +1,10 @@
 $(document).on("page:change", function() {
   var userCount = $("#user-count")
   var currentUsers = $("#current-users")
-  getUsers(userCount, currentUsers)
 
-
-
+  if($('body').is('.UserIndex')){
+    getUsers(userCount, currentUsers)
+  }
 
 })
 
