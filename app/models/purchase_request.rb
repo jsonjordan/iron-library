@@ -2,7 +2,8 @@ class PurchaseRequest < ActiveRecord::Base
 
   validates_presence_of :isbn,
                         :user_id,
-                        :campus_id
+                        :campus_id,
+                        :status
 
   validates_uniqueness_of :isbn
 
