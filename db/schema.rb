@@ -14,6 +14,7 @@
 ActiveRecord::Schema.define(version: 20160629173944) do
 
   create_table "books", force: :cascade do |t|
+    t.string   "isbn"
     t.string   "title"
     t.string   "author"
     t.string   "category"
@@ -95,6 +96,7 @@ ActiveRecord::Schema.define(version: 20160629173944) do
     t.string   "gmail_id"
     t.string   "type"
     t.string   "klass"
+    t.integer  "campus_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
