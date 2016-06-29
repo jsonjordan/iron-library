@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20160629173944) do
     t.datetime "due_date"
     t.integer  "book_id"
     t.integer  "user_id"
+    t.string   "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -53,6 +54,7 @@ ActiveRecord::Schema.define(version: 20160629173944) do
     t.string   "klass"
     t.integer  "user_id"
     t.integer  "campus_id"
+    t.string   "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

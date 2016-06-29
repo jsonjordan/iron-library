@@ -1,5 +1,19 @@
 Rails.application.routes.draw do
   devise_for :users
+
+
+  resources :campus do
+    resources :books, shallow: true do
+      resources :reviews, shallow: true
+      resources :checkouts, shallow: true
+    end
+    resources :purchase_requests, shallow: true
+  end
+
+  resources :users, shallow: true do
+    resources :reservations, shallow: true
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
