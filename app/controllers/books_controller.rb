@@ -19,7 +19,7 @@ class BooksController < ApplicationController
 
   def results
     @campus = Campus.find params[:campu_id]
-    @book = @campus.books.new(isbn: params[:book][:isbn])
+    get_book(params[:book][:isbn])
   end
 
   def create
@@ -50,6 +50,11 @@ class BooksController < ApplicationController
 
   def approved_params
     #params.require
+  end
+
+  def get_book isbn
+    response = HTTParty.get("http://isbndb.com/api/v2/json/#{ENV["isbndb_key"]}/book/#{isbn}")
+    binding.pry
   end
 
 end

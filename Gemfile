@@ -45,6 +45,7 @@ group :development do
   gem 'spring'
 end
 
+gem 'figaro'
 gem 'rails-erd'
 gem 'devise'
 gem 'pundit'
