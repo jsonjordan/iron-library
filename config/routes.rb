@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
 
+  get 'books' => 'books#index'
+  get '/campus/:campu_id/books' => 'books#campus_index'
+
   resources :campus do
-    resources :books, shallow: true do
+    resources :books, except: [:index], shallow: true do
       resources :reviews, shallow: true
       resources :checkouts, shallow: true
     end

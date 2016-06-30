@@ -15,3 +15,8 @@ user1.save(:validate => false)
 
 user2 = cam.users.new(name: "Robyn Pickering", email: "rp@example.com", password: "hunter2", slack_name: "r.pickering", klass: "Front End")
 user2.save(:validate => false)
+
+book1 = cam.books.new(title: "This is going to be deleted", author: "A. Sadman", category: "Poetry", status: "in")
+book1.save(:validate => false)
+book2 = cam.books.new(title: "My favorite this", author: "A. Gladman", category: "Self Help", status: "checked out")
+book2.save(:validate => false)
