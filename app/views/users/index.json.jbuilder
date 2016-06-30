@@ -1,4 +1,5 @@
-json.activity @users do |u|
+json.userInfo @users do |u|
+  json.id           u.id
   json.name         u.name
   json.email        u.email
   json.campus       u.campus.city

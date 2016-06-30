@@ -2,23 +2,29 @@ $(document).on("page:change", function() {
   var userCount = $("#user-count")
   var currentUsers = $("#current-users")
 
+
   if($('body').is('.UserIndex')){
-    getUsers(userCount, currentUsers)
+    getUsers()
+
+
   }
 
 })
 
 
-var getUsers = function(userCount, currentUsers) {
+var getUsers = function() {
+  var userCount = $("#user-count")
+  var currentUsers = $("#current-users")
+
   $.ajax("/users.json", {
     success: function(data) {
 
-      var length = data.activity.length
+      var length = data.userInfo.length
 
       userCount.text(length)
 
       for (var i=0; i < length; i ++) {
-        var user = data.activity[i]
+        var user = data.userInfo[i]
 
         var newItem = $("<tr>")
 
@@ -38,14 +44,36 @@ var getUsers = function(userCount, currentUsers) {
           userSlack.text(user.slack_name)
           newItem.append(userSlack)
 
+          var userButtons = $("<td>")
+          var deleteButton = $("<button>").addClass("delete-user btn btn-danger btn-xs").text("Delete").attr('data-user-id', user.id)
+          userButtons.append(deleteButton)
+          newItem.append(userButtons)
+
 
         currentUsers.append(newItem)
       }
+
+      listenForDeletes()
 
 
     },
     error: function() {
       alert("No no no!")
     }
+  })
+}
+
+function listenForDeletes() {
+  $(".delete-user").click(function() {
+    console.log("delete clicked")
+    var userId = $(this).data("user-id")
+    $.ajax("/users/" + userId + ".json", {
+      method: "DELETE",
+      success: function() {
+        $("#current-users").empty(),
+        getUsers()
+      },
+      error: function() { alert("Did not delete") }
+    })
   })
 }
