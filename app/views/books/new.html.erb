@@ -1,0 +1,5 @@
+<h4>Add a book to TIY-<%= @campus.city %>'s library</h4>
+<%= bootstrap_form_for @book, url: book_results_path(@campus), method: :get do |f| %>
+  <%= f.text_field :isbn, label: "ISBN number" %>
+  <button class="btn btn-primary">Submit</button>
+<% end %>

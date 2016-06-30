@@ -53,7 +53,7 @@ var getUsers = function() {
         currentUsers.append(newItem)
       }
 
-      listenForDeletes()
+      listenForUserDeletes()
 
 
     },
@@ -63,7 +63,7 @@ var getUsers = function() {
   })
 }
 
-function listenForDeletes() {
+function listenForUserDeletes() {
   $(".delete-user").click(function() {
     console.log("delete clicked")
     var userId = $(this).data("user-id")

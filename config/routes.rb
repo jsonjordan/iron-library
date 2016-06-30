@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   get 'books' => 'books#index'
+  get '/campus/:campu_id/books/results' => 'books#results', as: 'book_results'
   get '/campus/:campu_id/books' => 'books#campus_index'
 
   resources :campus do

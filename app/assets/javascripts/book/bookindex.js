@@ -63,7 +63,7 @@ var getBooks = function() {
         currentBooks.append(newItem)
       }
 
-      listenForDeletes()
+      listenForBookDeletes()
 
 
     },
@@ -73,7 +73,7 @@ var getBooks = function() {
   })
 }
 
-function listenForDeletes() {
+function listenForBookDeletes() {
   $(".delete-book").click(function() {
     console.log("delete clicked")
     var bookId = $(this).data("book-id")
@@ -81,7 +81,7 @@ function listenForDeletes() {
       method: "DELETE",
       success: function() {
         $("#current-books").empty(),
-        getUsers()
+        getBooks()
       },
       error: function() { alert("Did not delete") }
     })

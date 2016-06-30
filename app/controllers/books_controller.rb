@@ -13,11 +13,24 @@ class BooksController < ApplicationController
   end
 
   def new
+    @campus = Campus.find params[:campu_id]
+    @book = @campus.books.new
+  end
 
+  def results
+    @campus = Campus.find params[:campu_id]
+    @book = @campus.books.new(isbn: params[:book][:isbn])
   end
 
   def create
-
+    @campus = Campus.find params[:campu_id]
+    @book = @campus.books.new #approved_params
+    if @book.save
+      flash[:notice] = "Book added!"
+      redirect_to "/campus/#{params[:campu_id]}/books"
+    else
+      render :new
+    end
   end
 
   def edit
@@ -29,11 +42,22 @@ class BooksController < ApplicationController
   end
 
   def destroy
-
+    book = Book.find params[:id]
+    book.destroy
     respond_to do |format|
       format.html { redirect_to :back }
       format.json { render json: { status: :ok } }
     end
+  end
+
+  private
+
+  def set_campus
+    @campus = Campus.find params[:campu_id]
+  end
+
+  def approved_params
+    #params.require
   end
 
 end
