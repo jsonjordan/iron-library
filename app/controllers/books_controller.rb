@@ -64,10 +64,18 @@ class BooksController < ApplicationController
       r = JSON.parse(response)
     unless r["error"]
       data = r["data"].first
+      if(data["edition_info"] =~ /\d{4}/)
+        pub_yr = data["edition_info"].match(/\d{4}/)
+      elsif(data["publisher_text"] =~ /\d{4}/)
+        pub_yr = data["publisher_text"].match(/\d{4}/)
+      else
+        pub_yr = ""
+      end
       @book = Book.new(isbn: isbn,
                        title: data["title_long"],
                        author: data["author_data"].first["name"],
                        summary: data["summary"],
+                       year_of_publication: pub_yr,
                        data: r)
     end
   end
