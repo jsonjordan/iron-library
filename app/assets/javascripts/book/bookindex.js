@@ -49,21 +49,28 @@ var getBooks = function() {
           newItem.append(bookStatus)
 
           var bookButtons = $("<td>")
-          var editButton = $("<button>").addClass("edit-book btn btn-warning btn-xs").text("Edit").attr('data-book-id', book.id)
-          var deleteButton = $("<button>").addClass("delete-book btn btn-danger btn-xs").text("Delete").attr('data-book-id', book.id)
-          var checkOutButton = $("<button>").addClass("check-out-book btn btn-info btn-xs").text("Check Out").attr('data-book-id', book.id)
-          var reserveButton = $("<button>").addClass("reserve-book btn btn-success btn-xs").text("Reserve").attr('data-book-id', book.id)
-          bookButtons.append(deleteButton)
-          bookButtons.append(editButton)
-          bookButtons.append(checkOutButton)
-          bookButtons.append(reserveButton)
+          var gotoBookForm = $("<form>").attr('action', "/books/" + book.id)
+          var gotoBookButton = $("<button>").addClass("btn btn-info btn-xs").text("Go To Book")
+          gotoBookForm.append(gotoBookButton)
+          bookButtons.append(gotoBookForm)
           newItem.append(bookButtons)
+
+          // var bookButtons = $("<td>")
+          // var editButton = $("<button>").addClass("edit-book btn btn-warning btn-xs").text("Edit").attr('data-book-id', book.id)
+          // var deleteButton = $("<button>").addClass("delete-book btn btn-danger btn-xs").text("Delete").attr('data-book-id', book.id)
+          // var checkOutButton = $("<button>").addClass("check-out-book btn btn-info btn-xs").text("Check Out").attr('data-book-id', book.id)
+          // var reserveButton = $("<button>").addClass("reserve-book btn btn-success btn-xs").text("Reserve").attr('data-book-id', book.id)
+          // bookButtons.append(deleteButton)
+          // bookButtons.append(editButton)
+          // bookButtons.append(checkOutButton)
+          // bookButtons.append(reserveButton)
+          // newItem.append(bookButtons)
 
 
         currentBooks.append(newItem)
       }
 
-      listenForBookDeletes()
+      listenForBookGotos()
 
 
     },
@@ -73,17 +80,9 @@ var getBooks = function() {
   })
 }
 
-function listenForBookDeletes() {
-  $(".delete-book").click(function() {
-    console.log("delete clicked")
+function listenForBookGotos() {
+  $(".goto-book").click(function() {
     var bookId = $(this).data("book-id")
-    $.ajax("/books/" + bookId + ".json", {
-      method: "DELETE",
-      success: function() {
-        $("#current-books").empty(),
-        getBooks()
-      },
-      error: function() { alert("Did not delete") }
-    })
+
   })
 }
