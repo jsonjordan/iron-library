@@ -4,10 +4,10 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  validates_presence_of :slack_name,
-                        :type,
-                        :klass,
-                        :campus_id
+  # validates_presence_of :slack_name,
+  #                       :type,
+  #                       :klass,
+  #                       :campus_id
 
   validates_uniqueness_of :slack_name, scope: :campus_id
 
@@ -16,4 +16,5 @@ class User < ActiveRecord::Base
   belongs_to :campus
   has_many :checkouts
   has_many :purchase_requests
+  has_many :reviews
 end

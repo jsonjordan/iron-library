@@ -4,5 +4,6 @@ class Review < ActiveRecord::Base
                         :content
 
   belongs_to :book
+  belongs_to :user
 
 end

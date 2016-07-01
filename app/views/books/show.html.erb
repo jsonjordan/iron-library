@@ -1,0 +1,48 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3">
+      <img src="http://covers.openlibrary.org/b/isbn/<%= @book.isbn %>-M.jpg?default=false" onerror="this.src='/no-cover.gif'" />
+      <div> <!--padding-->
+        <ul>
+        </ul>
+      </div>
+      <div class="button-container">
+        <%= button_to "Checkout", book_checkouts_path(@book), class: "btn btn-info btn-sm" %>
+        <%= button_to "Reserve", user_reservations_path(current_user), class: "btn btn-primary btn-sm", data: "#{@book.id}" %>
+        <div> <!--padding-->
+          <ul>
+          </ul>
+        </div>
+        <div>
+          <%= button_to "Write Review", new_book_review_path(@book), class: "btn btn-success btn-sm", method: "get" %>
+        </div>
+        <div> <!--padding-->
+          <ul>
+          </ul>
+        </div>
+        <div>
+          <%= button_to "Delete", book_path(@book), class: "btn btn-danger btn-sm", method: "delete" %>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <h3><%= @book.title %></h3>
+      <h4>By <%= @book.author  %></h4>
+      Summary:
+      <ul>
+        <li><%= @book.summary  %></li>
+      </ul>
+    </div>
+  </div>
+  <h3>Reviews
+    <span class="badge"><%= @book.reviews.length%></span>
+  </h3>
+  <% @book.reviews.each do |rev|%>
+    <div class="well">
+      <p>"<%= rev.content %>"</p>
+      <p align="center"><%= rev.user.name %></p>
+      <p align="right"><%=(rev.updated_at.in_time_zone('Eastern Time (US & Canada)')).strftime("%B %-d %Y - %I:%M%p EST")%></p>
+    </div>
+  <% end %>
+</div>

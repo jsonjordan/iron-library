@@ -1,10 +1,10 @@
 <h3>Confirm the book to add to TIY-<%= @campus.city %>'s library</h3>
 <div class="container">
   <div class="row">
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <img src="http://covers.openlibrary.org/b/isbn/<%= @book.isbn %>-M.jpg?default=false" onerror="this.src='/no-cover.gif'" />
     </div>
-    <div class="col-sm-7">
+    <div class="col-sm-6">
       <h3><%= @book.title %></h3>
       <h4>By <%= @book.author  %></h4>
       Summary:
