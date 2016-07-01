@@ -1,0 +1,6 @@
+<h4>Edit this review for <%= @review.book.title %></h4>
+<%= bootstrap_form_for @review, url: review_path(@review), method: :patch do |f| %>
+  <%= f.text_area :content, value: @review.content %>
+  <%= f.text_area :response, value: @review.response %>
+  <button class="btn btn-primary btn-sm">Submit</button>
+<% end %>

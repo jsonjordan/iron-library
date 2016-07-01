@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20160629173944) do
 
   create_table "reviews", force: :cascade do |t|
     t.text     "content"
+    t.text     "response",   default: nil
     t.integer  "book_id"
     t.string   "user_id"
     t.datetime "created_at", null: false

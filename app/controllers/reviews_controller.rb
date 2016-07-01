@@ -25,6 +25,20 @@ class ReviewsController < ApplicationController
     end
   end
 
+  def edit
+    @review = Review.find params[:id]
+  end
+
+  def update
+    @review = Review.find params[:id]
+    if @review.update approved_params
+      flash[:notice] = "Review edited!"
+      redirect_to @review.book
+    else
+      render :edit
+    end
+  end
+
   def destroy
     book = Book.find params[:id]
     book.destroy
@@ -41,7 +55,7 @@ class ReviewsController < ApplicationController
   end
 
   def approved_params
-    params.require(:review).permit(:content, :user_id)
+    params.require(:review).permit(:content, :user_id, :response)
   end
 
 
