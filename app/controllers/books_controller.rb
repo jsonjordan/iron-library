@@ -5,11 +5,11 @@ class BooksController < ApplicationController
   end
 
   def index
-    @books = Book.all
+    @books = Book.where(confirmed: true)
   end
 
   def campus_index
-    @books = Book.where(campus_id: params[:campu_id])
+    @books = Book.where(campus_id: params[:campu_id], confirmed: true)
   end
 
   def new
@@ -21,19 +21,20 @@ class BooksController < ApplicationController
     @campus = Campus.find params[:campu_id]
     get_book(params[:book][:isbn])
 
-    if !@book.present?
+    if @book.present?
+      @book.save
+    else
       flash[:warning] = "Book not found"
       redirect_to new_campu_book_path(@campus)
     end
 
-    flash[:book] = @book
-
   end
 
   def create
-    @campus = Campus.find params[:campu_id]
-    @book = @campus.books.new flash[:book]
+    @book = Book.find params[:book][:book_id]
     @book.category = params[:book][:category]
+    @book.campus_id = params[:campu_id]
+    @book.confirmed = true
     if @book.save
       flash[:notice] = "Book added!"
       redirect_to "/campus/#{params[:campu_id]}/books"

@@ -12,7 +12,7 @@
         <li><%= @book.summary  %></li>
       </ul>
       <div class="button-container">
-        <%= bootstrap_form_for @book, url: campu_books_path(@campus) do |f| %>
+        <%= bootstrap_form_for @book, layout: :inline, url: campu_books_path(@campus), method: :post do |f| %>
           <%= f.select :category, [["general", "general"],
                                    ["ruby", "ruby"],
                                    ["rails", "rails"],
@@ -21,7 +21,8 @@
                                    ["javascript", "javascript"],
                                    ["angular", "angular"],
                                    ["react", "react"]],
-                                   { label: "Select category" }, { class: "selectpicker" } %>
+                                   { label: "Select category:" }, { class: "selectpicker" } %>
+          <%= f.hidden_field :book_id, value: @book.id %>
           <button class="btn btn-success btn-sm">Confirm</button>
         <% end %>
 
