@@ -1,11 +1,40 @@
 <h2>Edit <%= resource_name.to_s.humanize %></h2>
+<h4>If just signing up, please fill out addition informaion</h4>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
 
   <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name%>
+  </div>
+
+  <div class="field">
+    <%= f.label :campus %><br />
+    <%= f.select :campus_id,
+              options_for_select([['Durham', 1]]), :include_blank => 'Select One' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :class %><br />
+    <%= f.select :klass,
+              options_for_select([['Rails', 'rails'],
+                                  ['Python', 'python'],
+                                  ['C#', 'c#'],
+                                  ['Front End', 'front end'],
+                                  ['Java', 'java'],
+                                  ['Mobile', 'mobile'],
+                                  ['Operations', 'operations']]), :include_blank => 'Select One' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :slack_name %><br />
+    <%= f.text_field :slack_name%>
+  </div>
+
+  <div class="field">
     <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
+    <%= f.email_field :email%>
   </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>

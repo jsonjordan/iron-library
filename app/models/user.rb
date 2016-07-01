@@ -11,7 +11,6 @@ class User < ActiveRecord::Base
 
   validates_uniqueness_of :slack_name, scope: :campus_id
 
-  validates_uniqueness_of :gmail_id
 
   belongs_to :campus
   has_many :checkouts
