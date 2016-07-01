@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   resources :campus do
     resources :books, except: [:index], shallow: true do
-      resources :reviews, shallow: true
+      resources :reviews, except: [:show, :index], shallow: true
       resources :checkouts, shallow: true
     end
     resources :purchase_requests, shallow: true

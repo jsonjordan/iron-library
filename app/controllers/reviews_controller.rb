@@ -1,14 +1,5 @@
 class ReviewsController < ApplicationController
 
-  def show
-
-  end
-
-  def index
-
-  end
-
-
   def new
     @book = Book.find params[:book_id]
     @review = @book.reviews.new(user_id: current_user.id)
@@ -40,12 +31,10 @@ class ReviewsController < ApplicationController
   end
 
   def destroy
-    book = Book.find params[:id]
-    book.destroy
-    respond_to do |format|
-      format.html { redirect_to :back }
-      format.json { render json: { status: :ok } }
-    end
+    review = Review.find params[:id]
+    review.destroy
+    flash[:notice] = "Review deleted!"
+    redirect_to :back
   end
 
   private
