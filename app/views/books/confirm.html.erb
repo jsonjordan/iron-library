@@ -12,7 +12,19 @@
         <li><%= @book.summary  %></li>
       </ul>
       <div class="button-container">
-        <%= button_to "Confirm", campu_books_path(@campus), class: "btn btn-success btn-sm", book: @book %>
+        <%= bootstrap_form_for @book, url: campu_books_path(@campus) do |f| %>
+          <%= f.select :category, [["general", "general"],
+                                   ["ruby", "ruby"],
+                                   ["rails", "rails"],
+                                   ["html", "html"],
+                                   ["css", "css"],
+                                   ["javascript", "javascript"],
+                                   ["angular", "angular"],
+                                   ["react", "react"]],
+                                   { label: "Select category" }, { class: "selectpicker" } %>
+          <button class="btn btn-success btn-sm">Confirm</button>
+        <% end %>
+
         <%= button_to "Reject", new_campu_book_path(@campus), class: "btn btn-warning btn-sm", method: "get" %>
       </div>
     </div>

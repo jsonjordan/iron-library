@@ -33,6 +33,7 @@ class BooksController < ApplicationController
   def create
     @campus = Campus.find params[:campu_id]
     @book = @campus.books.new flash[:book]
+    @book.category = params[:book][:category]
     if @book.save
       flash[:notice] = "Book added!"
       redirect_to "/campus/#{params[:campu_id]}/books"
