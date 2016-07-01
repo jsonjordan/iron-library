@@ -17,14 +17,22 @@ class BooksController < ApplicationController
     @book = @campus.books.new
   end
 
-  def results
+  def confirm
     @campus = Campus.find params[:campu_id]
     get_book(params[:book][:isbn])
+
+    if !@book.present?
+      flash[:warning] = "Book not found"
+      redirect_to new_campu_book_path(@campus)
+    end
+
+    flash[:book] = @book
+
   end
 
   def create
     @campus = Campus.find params[:campu_id]
-    @book = @campus.books.new #approved_params
+    @book = @campus.books.new flash[:book]
     if @book.save
       flash[:notice] = "Book added!"
       redirect_to "/campus/#{params[:campu_id]}/books"
@@ -48,13 +56,18 @@ class BooksController < ApplicationController
     @campus = Campus.find params[:campu_id]
   end
 
-  def approved_params
-    #params.require
-  end
-
   def get_book isbn
     response = HTTParty.get("http://isbndb.com/api/v2/json/#{ENV["isbndb_key"]}/book/#{isbn}")
-    binding.pry
+
+      r = JSON.parse(response)
+    unless r["error"]
+      data = r["data"].first
+      @book = Book.new(isbn: isbn,
+                       title: data["title_long"],
+                       author: data["author_data"].first["name"],
+                       summary: data["summary"],
+                       data: r)
+    end
   end
 
 end
