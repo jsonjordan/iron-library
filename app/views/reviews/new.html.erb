@@ -1,0 +1,6 @@
+<h4>Write a review for <%= @review.book.title %></h4>
+<%= bootstrap_form_for @review, url: book_reviews_path(@review.book) do |f| %>
+  <%= f.text_area :content, label: " " %>
+  <%= f.hidden_field :user_id, value: current_user.id%>
+  <button class="btn btn-primary btn-sm">Submit</button>
+<% end %>

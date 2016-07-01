@@ -41,8 +41,13 @@
   <% @book.reviews.each do |rev|%>
     <div class="well">
       <p>"<%= rev.content %>"</p>
-      <p align="center"><%= rev.user.name %></p>
-      <p align="right"><%=(rev.updated_at.in_time_zone('Eastern Time (US & Canada)')).strftime("%B %-d %Y - %I:%M%p EST")%></p>
+      <p align="right"><font color="crimson"><%= rev.user.name %></font> on <%=(rev.updated_at.in_time_zone('Eastern Time (US & Canada)')).strftime("%B %-d %Y - %I:%M%p EST")%>
+        <br>
+          <div align="right" class="button-container">
+            <%= button_to "Edit", edit_review_path(rev), class: "btn btn-warning btn-sm", method: "get" %>
+            <%= button_to "Delete", review_path(rev), class: "btn btn-danger btn-sm", method: "delete" %>
+          </div>
+      </p>
     </div>
   <% end %>
 </div>
