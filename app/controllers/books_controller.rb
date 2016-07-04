@@ -66,32 +66,33 @@ class BooksController < ApplicationController
                 :key => ENV["goodreads_key"],
                 :field => 'isbn' })
 
-      r = JSON.parse(response)
+    open_lib_pic = HTTParty.get("http://covers.openlibrary.org/b/isbn/#{isbn}-M.jpg?default=false")
 
-      good_reads = response2["GoodreadsResponse"]["search"]["results"]["work"]
+    r = JSON.parse(response)
+
+    good_reads = response2["GoodreadsResponse"]["search"]["results"]["work"]
 
     if r["error"]
       isbndb = ""
     else
       isbndb = r["data"].first["summary"]
     end
-      # if(data["edition_info"] =~ /\d{4}/)
-      #   pub_yr = data["edition_info"].match(/\d{4}/)
-      # elsif(data["publisher_text"] =~ /\d{4}/)
-      #   pub_yr = data["publisher_text"].match(/\d{4}/)
-      # else
-      #   pub_yr = ""
-      # end
 
+    if !good_reads["best_book"]["image_url"].match(/nophoto/).present?
       pic_url = good_reads["best_book"]["image_url"].gsub(/(?<=[0-9])m/, "l")
+    elsif open_lib_pic.code == 200
+      pic_url = "http://covers.openlibrary.org/b/isbn/#{isbn}-M.jpg"
+    else
+      pic_url = "/no-cover.gif"
+    end
 
-      @book = Book.new(isbn: isbn,
-                       title: good_reads["best_book"]["title"],
-                       author: good_reads["best_book"]["author"]["name"],
-                       summary: isbndb.gsub(/�/, "'"),
-                       year_of_publication: good_reads["original_publication_year"],
-                       gr_rating: good_reads["average_rating"],
-                       cover_url: pic_url,
-                       data: r)
+    @book = Book.new(isbn: isbn,
+                     title: good_reads["best_book"]["title"],
+                     author: good_reads["best_book"]["author"]["name"],
+                     summary: isbndb.gsub(/�/, "'"),
+                     year_of_publication: good_reads["original_publication_year"],
+                     gr_rating: good_reads["average_rating"],
+                     cover_url: pic_url,
+                     data: r)
   end
 end
