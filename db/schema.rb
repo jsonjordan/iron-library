@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(version: 20160629173944) do
     t.text     "summary"
     t.text     "data"
     t.integer  "campus_id"
+    t.string   "gr_rating"
+    t.string   "cover_url"
     t.boolean  "confirmed",              default: false
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false

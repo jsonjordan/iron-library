@@ -47,7 +47,7 @@ class BooksController < ApplicationController
     book = Book.find params[:id]
     book.destroy
     respond_to do |format|
-      format.html { redirect_to :back }
+      format.html { redirect_to "/campus/#{book.campus.id}/books" }
       format.json { render json: { status: :ok } }
     end
   end
@@ -61,23 +61,37 @@ class BooksController < ApplicationController
   def get_book isbn
     response = HTTParty.get("http://isbndb.com/api/v2/json/#{ENV["isbndb_key"]}/book/#{isbn}")
 
-      r = JSON.parse(response)
-    unless r["error"]
-      data = r["data"].first
-      if(data["edition_info"] =~ /\d{4}/)
-        pub_yr = data["edition_info"].match(/\d{4}/)
-      elsif(data["publisher_text"] =~ /\d{4}/)
-        pub_yr = data["publisher_text"].match(/\d{4}/)
-      else
-        pub_yr = ""
-      end
-      @book = Book.new(isbn: isbn,
-                       title: data["title_long"],
-                       author: data["author_data"].first["name"],
-                       summary: data["summary"],
-                       year_of_publication: pub_yr,
-                       data: r)
-    end
-  end
+    response2 = HTTParty.get("http://www.goodreads.com/search/index.xml",
+    :query => { :q => isbn,
+                :key => ENV["goodreads_key"],
+                :field => 'isbn' })
 
+      r = JSON.parse(response)
+
+      good_reads = response2["GoodreadsResponse"]["search"]["results"]["work"]
+
+    if r["error"]
+      isbndb = ""
+    else
+      isbndb = r["data"].first["summary"]
+    end
+      # if(data["edition_info"] =~ /\d{4}/)
+      #   pub_yr = data["edition_info"].match(/\d{4}/)
+      # elsif(data["publisher_text"] =~ /\d{4}/)
+      #   pub_yr = data["publisher_text"].match(/\d{4}/)
+      # else
+      #   pub_yr = ""
+      # end
+
+      pic_url = good_reads["best_book"]["image_url"].gsub(/(?<=[0-9])m/, "l")
+
+      @book = Book.new(isbn: isbn,
+                       title: good_reads["best_book"]["title"],
+                       author: good_reads["best_book"]["author"]["name"],
+                       summary: isbndb,
+                       year_of_publication: good_reads["original_publication_year"],
+                       gr_rating: good_reads["average_rating"],
+                       cover_url: pic_url,
+                       data: r)
+  end
 end
