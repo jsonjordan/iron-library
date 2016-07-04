@@ -1,5 +1,4 @@
 <h2>Edit <%= resource_name.to_s.humanize %></h2>
-<h4>If just signing up, please fill out addition informaion</h4>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
@@ -12,7 +11,7 @@
   <div class="field">
     <%= f.label :campus %><br />
     <%= f.select :campus_id,
-              options_for_select([['Durham', 1]]), :include_blank => 'Select One' %>
+              options_from_collection_for_select(@campus.all, :id, :city), :include_blank => 'Select One' %>
   </div>
 
   <div class="field">

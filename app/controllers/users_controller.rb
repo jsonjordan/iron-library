@@ -8,14 +8,12 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
-
   def destroy
-    user = User.find params[:id]
-    user.destroy
+    @user = User.find params[:id]
+    @user.destroy
     respond_to do |format|
-      format.html { redirect_to :back }
-      format.json { render json: { status: :ok } }
+      format.html { redirect_to :back, notice: "#{@user.name} deleted!" }
+      format.json { render json: { status: :ok} }
     end
   end
-
 end

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  root 'books#index'
+
   get 'books' => 'books#index'
   get '/campus/:campu_id/books/confirm' => 'books#confirm', as: 'book_confirm'
   get '/campus/:campu_id/books' => 'books#campus_index'
@@ -12,11 +14,13 @@ Rails.application.routes.draw do
     resources :purchase_requests, shallow: true
   end
 
-  resources :users, only: [:destroy, :index] do
+  resources :users, only: [:index] do
     resources :reservations, shallow: true
   end
 
   devise_for :users, :controllers => { :registrations => 'plock' }
+
+  match 'users/:id' => 'users#destroy', :via => :delete, :as => :admin_destroy_user
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
