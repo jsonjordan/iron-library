@@ -88,7 +88,7 @@ class BooksController < ApplicationController
       @book = Book.new(isbn: isbn,
                        title: good_reads["best_book"]["title"],
                        author: good_reads["best_book"]["author"]["name"],
-                       summary: isbndb,
+                       summary: isbndb.gsub(/�/, "'"),
                        year_of_publication: good_reads["original_publication_year"],
                        gr_rating: good_reads["average_rating"],
                        cover_url: pic_url,
