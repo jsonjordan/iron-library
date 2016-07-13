@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get '/campus/:campu_id/books/confirm' => 'books#confirm', as: 'book_confirm'
   get '/campus/:campu_id/books' => 'books#campus_index'
   get '/users/:user_id/checkouts' => 'checkouts#user_index', as: 'user_checkouts'
+  get '/campus/:campu_id/checkouts' => 'checkouts#campus_index', as: 'campus_checkouts'
   get '/users/:user_id/check_in' => 'checkouts#check_in', as: 'user_check_in'
 
 

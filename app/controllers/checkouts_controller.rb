@@ -1,12 +1,8 @@
 class CheckoutsController < ApplicationController
 
-  def show
-    @book = Book.find(params[:id])
-    @reviews = @book.reviews.includes(:user)
-  end
-
   def index
-    @books = Book.where(confirmed: true)
+    @book = Book.find(params[:book_id])
+    @checkouts = @book.checkouts.order(:created_at).includes(:user).reverse
   end
 
   def user_index
@@ -14,7 +10,7 @@ class CheckoutsController < ApplicationController
   end
 
   def campus_index
-    @books = Book.where(campus_id: params[:campu_id], confirmed: true)
+    @checkouts = Campus.find(params[:campu_id]).checkouts.order(:status).includes(:book, :user)
   end
 
   def new
@@ -25,7 +21,7 @@ class CheckoutsController < ApplicationController
   def create
     @book = Book.find params[:book_id]
     @checkout = @book.checkouts.new(user: current_user,
-                                   due_date: Time.now + 1.weeks)
+                                    due_date: Time.now + 1.weeks)
 
     if @checkout.save
       @book.status = "checked out"
