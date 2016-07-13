@@ -17,17 +17,17 @@ ActiveRecord::Schema.define(version: 20160629173944) do
     t.string   "isbn"
     t.string   "title"
     t.string   "author"
-    t.string   "category",              default: ""
+    t.string   "category",                default: ""
     t.string   "year_of_publication"
-    t.string   "status",                 default: "in"
+    t.string   "status",                  default: "in"
     t.text     "summary"
     t.text     "data"
     t.integer  "campus_id"
     t.string   "gr_rating"
     t.string   "cover_url"
-    t.boolean  "confirmed",              default: false
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.boolean  "confirmed",               default: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   add_index "books", ["campus_id"], name: "index_books_on_campus_id"
@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(version: 20160629173944) do
     t.datetime "updated_at",                          null: false
     t.string   "slack_name"
     t.string   "gmail_id"
-    t.string   "permission",                  default: "student"
+    t.string   "permission",                          default: "student"
     t.string   "klass"
     t.integer  "campus_id"
     t.string   "name"

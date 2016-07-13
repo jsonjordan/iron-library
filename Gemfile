@@ -43,8 +43,10 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'bullet'
 end
 
+gem 'roo'
 gem 'figaro'
 gem 'rails-erd'
 gem 'devise'
