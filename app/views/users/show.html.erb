@@ -1,0 +1,13 @@
+<h2>Account Options</h2>
+
+<h4>Update Account Information</h4>
+<%= link_to "Update Account Information", edit_user_registration_path %>
+
+<h4>See Your Checkout History</h4>
+<%= link_to "Checkout History", user_checkouts_path(@user) %>
+
+<h4>Check In a Book</h4>
+<%= link_to "Check-in", user_check_in_path(@user) %>
+
+<h4>See Your Reservation History</h4>
+<%= link_to "Reservation History", user_reservations_path(@user) %>

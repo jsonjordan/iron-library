@@ -5,6 +5,11 @@ Rails.application.routes.draw do
   get 'books' => 'books#index'
   get '/campus/:campu_id/books/confirm' => 'books#confirm', as: 'book_confirm'
   get '/campus/:campu_id/books' => 'books#campus_index'
+  get '/users/:user_id/checkouts' => 'checkouts#user_index', as: 'user_checkouts'
+  get '/users/:user_id/check_in' => 'checkouts#check_in', as: 'user_check_in'
+
+
+  devise_for :users, :controllers => { :registrations => 'plock' }
 
   resources :campus do
     resources :books, except: [:index], shallow: true do
@@ -14,11 +19,9 @@ Rails.application.routes.draw do
     resources :purchase_requests, shallow: true
   end
 
-  resources :users, only: [:index] do
+  resources :users, only: [:index, :show] do
     resources :reservations, shallow: true
   end
-
-  devise_for :users, :controllers => { :registrations => 'plock' }
 
   match 'users/:id' => 'users#destroy', :via => :delete, :as => :admin_destroy_user
 

@@ -1,0 +1,30 @@
+<h2>
+  Checkout History for <%= @checkouts.first.user.name %>
+</h2>
+
+<table class="table table-hover table-striped table-condensed">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Checked Out On</th>
+      <th>Status</th>
+      <th>Due Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @checkouts.each do |co| %>
+      <tr>
+        <th><%= co.book.title %></th>
+        <th><%= co.book.author %>Author</th>
+        <th><%= co.created_at.in_time_zone('Eastern Time (US & Canada)').strftime("%B %-d, %Y")%></th>
+        <th><%= co.status%></th>
+        <% if co.status == "active" %>
+          <th><%= co.due_date.in_time_zone('Eastern Time (US & Canada)').strftime("%B %-d, %Y") %></th>
+        <% else %>
+          <th></th>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

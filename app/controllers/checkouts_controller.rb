@@ -10,7 +10,7 @@ class CheckoutsController < ApplicationController
   end
 
   def user_index
-
+    @checkouts = User.find(params[:user_id]).checkouts.order(:status).includes(:book)
   end
 
   def campus_index
@@ -25,7 +25,7 @@ class CheckoutsController < ApplicationController
   def create
     @book = Book.find params[:book_id]
     @checkout = @book.checkouts.new(user: current_user,
-                                   due_date: Time.now)
+                                   due_date: Time.now + 1.weeks)
 
     if @checkout.save
       @book.status = "checked out"
@@ -37,6 +37,25 @@ class CheckoutsController < ApplicationController
       redirect_to @book
     end
 
+  end
+
+  def check_in
+    @checkouts = User.find(params[:user_id]).checkouts.where.not(status: "checked in").includes(:book)
+  end
+
+  def update
+    checkout = Checkout.find params[:id]
+    checkout.status = "checked in"
+    if checkout.save
+      book = checkout.book
+      book.status = "in"
+      book.save
+      flash[:notice] = "Book checked in!"
+      redirect_to user_checkouts_path(current_user)
+    else
+      flash[:warning] = "Book could not be checked in"
+      redirect_to user_checkouts_path(current_user)
+    end
   end
 
   def destroy
