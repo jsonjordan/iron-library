@@ -11,10 +11,13 @@
         <ul>
         </ul>
       </div>
-      <p>Status: <%= @book.status %></p>
       <div class="button-container">
-        <%= button_to "Checkout", book_checkouts_path(@book), class: "btn btn-info btn-sm" %>
-        <%= button_to "Reserve", user_reservations_path(current_user), class: "btn btn-primary btn-sm", data: "#{@book.id}" %>
+        Status: <%= @book.status %> -
+        <% if @book.status = "in" %>
+          <%= button_to "Checkout", book_checkouts_path(@book), class: "btn btn-info btn-sm" %>
+        <% else %>
+          <%= button_to "Reserve", user_reservations_path(current_user), class: "btn btn-primary btn-sm", data: "#{@book.id}" %>
+        <% end %>
         <div> <!--padding-->
           <ul>
           </ul>
