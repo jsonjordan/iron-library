@@ -46,9 +46,9 @@
     </div>
   </div>
   <h3><font color="crimson">Iron</font>Reviews
-    <span class="badge"><%= @book.reviews.length%></span>
+    <span class="badge"><%= @reviews.length%></span>
   </h3>
-  <% @book.reviews.each do |rev|%>
+  <% @reviews.each do |rev|%>
     <div class="well">
       <p>"<%= rev.content %>"</p>
       <% if rev.response %>
