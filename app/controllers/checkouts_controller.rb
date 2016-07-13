@@ -13,11 +13,6 @@ class CheckoutsController < ApplicationController
     @checkouts = Campus.find(params[:campu_id]).checkouts.order(:status).includes(:book, :user)
   end
 
-  def new
-    @campus = Campus.find params[:campu_id]
-    @book = @campus.books.new
-  end
-
   def create
     @book = Book.find params[:book_id]
     @checkout = @book.checkouts.new(user: current_user,
@@ -36,7 +31,8 @@ class CheckoutsController < ApplicationController
   end
 
   def check_in
-    @checkouts = User.find(params[:user_id]).checkouts.where.not(status: "checked in").includes(:book)
+    @user = User.find(params[:user_id])
+    @checkouts = @user.checkouts.where.not(status: "checked in").includes(:book)
   end
 
   def update
@@ -53,14 +49,4 @@ class CheckoutsController < ApplicationController
       redirect_to user_checkouts_path(current_user)
     end
   end
-
-  def destroy
-    book = Book.find params[:id]
-    book.destroy
-    respond_to do |format|
-      format.html { redirect_to "/campus/#{book.campus.id}/books" }
-      format.json { render json: { status: :ok } }
-    end
-  end
-
 end
