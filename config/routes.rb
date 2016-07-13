@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get '/users/:user_id/checkouts' => 'checkouts#user_index', as: 'user_checkouts'
   get '/campus/:campu_id/checkouts' => 'checkouts#campus_index', as: 'campus_checkouts'
   get '/users/:user_id/check_in' => 'checkouts#check_in', as: 'user_check_in'
+  get '/books/:book_id/reservations' => 'reservations#book_index', as: 'book_reservations'
+  get '/users/:user_id/reservations' => 'reservations#user_index', as: 'user_reservations'
 
 
   devise_for :users, :controllers => { :registrations => 'plock' }
@@ -16,7 +18,7 @@ Rails.application.routes.draw do
     resources :books, except: [:index], shallow: true do
       resources :reviews, except: [:show, :index], shallow: true
       resources :checkouts, except: [:destroy, :new, :edit], shallow: true
-      resources :reservations, shallow: true
+      resources :reservations, only: [:create, :destroy], shallow: true
     end
     resources :purchase_requests, shallow: true
   end

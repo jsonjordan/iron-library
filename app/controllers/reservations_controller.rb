@@ -6,7 +6,8 @@ class ReservationsController < ApplicationController
   end
 
   def user_index
-    @checkouts = User.find(params[:user_id]).checkouts.order(:status).includes(:book)
+    @user = User.find(params[:user_id])
+    @reservations = @user.reservations.includes(:book)
   end
 
   def create
@@ -20,26 +21,9 @@ class ReservationsController < ApplicationController
       flash[:warning] = "Book could not be reserved"
       redirect_to @book
     end
-
   end
 
-  def check_in
-    @user = User.find(params[:user_id])
-    @checkouts = @user.checkouts.where.not(status: "checked in").includes(:book)
-  end
+  def destroy
 
-  def update
-    checkout = Checkout.find params[:id]
-    checkout.status = "checked in"
-    if checkout.save
-      book = checkout.book
-      book.status = "in"
-      book.save
-      flash[:notice] = "Book checked in!"
-      redirect_to user_checkouts_path(current_user)
-    else
-      flash[:warning] = "Book could not be checked in"
-      redirect_to user_checkouts_path(current_user)
-    end
   end
 end

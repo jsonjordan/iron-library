@@ -16,4 +16,5 @@ class User < ActiveRecord::Base
   has_many :checkouts
   has_many :purchase_requests
   has_many :reviews
+  has_many :reservations
 end

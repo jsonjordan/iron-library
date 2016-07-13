@@ -16,7 +16,7 @@
     <% @checkouts.each do |co| %>
       <tr>
         <th><%= co.book.title %></th>
-        <th><%= co.book.author %>Author</th>
+        <th><%= co.book.author %></th>
         <th><%= co.created_at.in_time_zone('Eastern Time (US & Canada)').strftime("%B %-d, %Y")%></th>
         <th><%= co.status%></th>
         <% if co.status == "active" %>
