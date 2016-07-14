@@ -17,4 +17,8 @@ class User < ActiveRecord::Base
   has_many :purchase_requests
   has_many :reviews
   has_many :reservations
+
+  def has_reservation? book
+    self.reservations.where(book: book)
+  end
 end

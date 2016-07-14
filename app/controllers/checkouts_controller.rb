@@ -6,7 +6,8 @@ class CheckoutsController < ApplicationController
   end
 
   def user_index
-    @checkouts = User.find(params[:user_id]).checkouts.order(:status).includes(:book)
+    @user = User.find(params[:user_id])
+    @checkouts = @user.checkouts.order(:status).includes(:book)
   end
 
   def campus_index
@@ -21,6 +22,9 @@ class CheckoutsController < ApplicationController
     if @checkout.save
       @book.status = "checked out"
       @book.save
+      if res = current_user.has_reservation?(@book)
+        res.destroy_all
+      end
       flash[:notice] = "Book checked out!"
       redirect_to @book
     else
