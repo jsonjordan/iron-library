@@ -1,0 +1,23 @@
+<h2>
+  Current Reservations for <%= @book.title %>
+</h2>
+
+<table class="table table-hover table-striped table-condensed">
+  <thead>
+    <tr>
+      <th>Place In Line</th>
+      <th>User</th>
+      <th>Estimated Availability Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reservations.each do |rev| %>
+      <tr>
+        <% position = (rev.book.reservations.order(:created_at).map(&:id).index(rev.id)) %>
+        <th><%= (position + 1)%></th>
+        <th><%= rev.user.name %></th>
+        <th><%= (rev.book.checkouts.where(status: "active").first.due_date + position.weeks).in_time_zone('Eastern Time (US & Canada)').strftime("%B %-d, %Y") %></th>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

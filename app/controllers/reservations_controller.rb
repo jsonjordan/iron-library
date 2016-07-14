@@ -2,7 +2,7 @@ class ReservationsController < ApplicationController
 
   def book_index
     @book = Book.find(params[:book_id])
-    @checkouts = @book.checkouts.order(:created_at).includes(:user).reverse
+    @reservations = @book.reservations.order(:created_at).includes(:user)
   end
 
   def user_index
