@@ -44,7 +44,11 @@ class CheckoutsController < ApplicationController
     checkout.status = "checked in"
     if checkout.save
       book = checkout.book
-      book.status = "in"
+      if book.reservations.count > 0
+        book.status = "on reserve"
+      else
+        book.status = "in"
+      end
       book.save
       flash[:notice] = "Book checked in!"
       redirect_to user_checkouts_path(current_user)
