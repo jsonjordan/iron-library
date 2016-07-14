@@ -7,6 +7,7 @@
     <tr>
       <th>Title</th>
       <th>Place In Line</th>
+      <th>Estimated Availability Date</th>
     </tr>
   </thead>
   <tbody>
@@ -14,6 +15,7 @@
       <tr>
         <th><%= rev.book.title %></th>
         <th><%= (rev.book.reservations.order(:created_at).map(&:id).index(rev.id)) + 1 %> out of <%= rev.book.reservations.count %></th>
+        <th><%= (rev.book.checkouts.where(status: "active").first.due_date + ((rev.book.reservations.order(:created_at).map(&:id).index(rev.id)).weeks)).in_time_zone('Eastern Time (US & Canada)').strftime("%B %-d, %Y") %></th>
       </tr>
     <% end %>
   </tbody>
