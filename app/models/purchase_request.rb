@@ -5,8 +5,6 @@ class PurchaseRequest < ActiveRecord::Base
                         :campus_id,
                         :status
 
-  validates_uniqueness_of :isbn
-
   belongs_to :user
   belongs_to :campus
 

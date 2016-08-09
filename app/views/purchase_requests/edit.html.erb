@@ -1,0 +1,13 @@
+<h4>Edit Purchase Request #<%= @pr.id %></h4>
+<p>Title: <%= @pr.title %>
+  <br>Author: <%= @pr.author %>
+  <br>ISBN: <%= @pr.isbn %>
+  <br>For Class: <%= @pr.klass %>
+  <br>Requested By: <%= @pr.user.email %>
+</p>
+<%= bootstrap_form_for @pr, url: purchase_request_path(@pr), method: :patch do |f| %>
+  <%= f.select :status,
+            options_for_select([['Purchased', 'purchased'],
+                                ['Denied', 'denied']]), :include_blank => 'Select Status' %>
+  <button class="btn btn-primary btn-sm">Submit</button>
+<% end %>

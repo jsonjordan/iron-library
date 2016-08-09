@@ -6,7 +6,8 @@ class PurchaseRequestsController < ApplicationController
 
   def index
     @campus = Campus.find params[:campu_id]
-    @prs = PurchaseRequest.where(campus_id: params[:campu_id]).includes(:user)
+    @prs = PurchaseRequest.where(campus_id: params[:campu_id], status: "pending").includes(:user)
+    @prs_past = PurchaseRequest.where(campus_id: params[:campu_id]).where.not(status: "pending").includes(:user)
   end
 
   def new
@@ -15,13 +16,13 @@ class PurchaseRequestsController < ApplicationController
   end
 
   def create
-    pr = current_user.purchase_requests.new approved_params
-    gb = GetBook.new pr.isbn
+    @pr = current_user.purchase_requests.new approved_params
+    gb = GetBook.new @pr.isbn
     book = gb.title_author
-    pr.title = book.first
-    pr.author = book.last
-    pr.status = "pending"
-    if pr.save
+    @pr.title = book.first
+    @pr.author = book.last
+    @pr.status = "pending"
+    if @pr.save
       flash[:notice] = "Purchase Request Made!"
       redirect_to campus_path
     else
@@ -34,10 +35,10 @@ class PurchaseRequestsController < ApplicationController
   end
 
   def update
-    pr = PurchaseRequest.find(params[:id])
-    if pr.update approved_params
+    @pr = PurchaseRequest.find(params[:id])
+    if @pr.update approved_params
       flash[:notice] = "Purchase Request updated!"
-      purchase_request_path(pr)
+      redirect_to campu_purchase_requests_path(@pr.campus_id)
     else
       render :edit
     end
@@ -46,6 +47,6 @@ class PurchaseRequestsController < ApplicationController
   private
 
   def approved_params
-    params.require(:purchase_request).permit(:isbn, :klass, :campus_id)
+    params.require(:purchase_request).permit(:isbn, :klass, :campus_id, :status)
   end
 end

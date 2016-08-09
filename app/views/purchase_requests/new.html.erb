@@ -1,5 +1,5 @@
 <h4>Request a book for TIY <%= @campus.city %></h4>
-<%= bootstrap_form_for @pr, url: campu_purchase_requests_path do |f| %>
+<%= bootstrap_form_for @pr, url: campu_purchase_requests_path, method: :post do |f| %>
   <%= f.text_field :isbn, label: "ISBN number (no dashes)" %>
   <%= f.select :klass,
             options_for_select([['Rails', 'rails'],
