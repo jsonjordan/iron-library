@@ -1,13 +1,13 @@
 class PurchaseRequestsController < ApplicationController
 
-  def show
-    @pr = PurchaseRequest.find(params[:id])
-  end
-
   def index
     @campus = Campus.find params[:campu_id]
     @prs = PurchaseRequest.where(campus_id: params[:campu_id], status: "pending").includes(:user)
     @prs_past = PurchaseRequest.where(campus_id: params[:campu_id]).where.not(status: "pending").includes(:user)
+  end
+
+  def user_index
+    @prs = current_user.purchase_requests.all
   end
 
   def new

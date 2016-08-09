@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get '/users/:user_id/check_in' => 'checkouts#check_in', as: 'user_check_in'
   get '/books/:book_id/reservations' => 'reservations#book_index', as: 'book_reservations'
   get '/users/:user_id/reservations' => 'reservations#user_index', as: 'user_reservations'
+  get '/users/purchase_requests' => 'purchase_requests#user_index', as: 'user_purchase_requests'
 
 
   devise_for :users, :controllers => { :registrations => 'plock' }
