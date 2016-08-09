@@ -61,3 +61,4 @@ group :development, :test do
 end
 
 gem 'httparty'
+gem 'pg_search'
