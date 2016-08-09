@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get '/books/:book_id/reservations' => 'reservations#book_index', as: 'book_reservations'
   get '/users/:user_id/reservations' => 'reservations#user_index', as: 'user_reservations'
   get '/users/purchase_requests' => 'purchase_requests#user_index', as: 'user_purchase_requests'
+  get '/books/search' => 'books#search', as: 'books_search'
+  get '/books/results' => 'books#results', as: 'books_results'
 
 
   devise_for :users, :controllers => { :registrations => 'plock' }

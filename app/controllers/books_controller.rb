@@ -9,6 +9,12 @@ class BooksController < ApplicationController
     @books = Book.where(confirmed: true)
   end
 
+  def search
+    if params[:criteria]
+      @books = Book.search_by_all(params[:criteria])
+    end
+  end
+
   def campus_index
     @books = Book.where(campus_id: params[:campu_id], confirmed: true)
   end
