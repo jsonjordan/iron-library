@@ -13,7 +13,13 @@ class CampusController < ApplicationController
   end
 
   def create
-
+    campus = Campus.new aproved_params
+    if campus.save
+      flash[:notice] = "Campus added!"
+      redirect_to campus_path
+    else
+      render :new
+    end
   end
 
   def edit
@@ -21,7 +27,19 @@ class CampusController < ApplicationController
   end
 
   def update
-    @campus = Campus.find(params[:id])
+    campus = Campus.find(params[:id])
+    if campus.update aproved_params
+      flash[:notice] = "Campus updated!"
+      redirect_to campu_path(campus)
+    else
+      render :edit
+    end
+  end
+
+  private
+
+  def aproved_params
+    params.require(:campus).permit(:street_address, :city, :state, :zip_code, :librarian)
   end
 
 end

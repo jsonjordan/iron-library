@@ -1,0 +1,9 @@
+<h4>Edit TIY <%= @campus.city %></h4>
+<%= bootstrap_form_for @campus, url: campu_path(@campus), method: :patch do |f| %>
+  <%= f.text_field :street_address, label: "Street Address" %>
+  <%= f.text_field :city, label: "City" %>
+  <%= f.text_field :state, label: "State Abbreviation" %>
+  <%= f.text_field :zip_code, label: "Zip Code" %>
+  <%= f.text_field :librarian, label: "Librarian's Name" %>
+  <button class="btn btn-primary btn-sm">Submit</button>
+<% end %>
