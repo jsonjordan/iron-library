@@ -1,4 +1,4 @@
-class CampusesController < ApplicationController
+class CampusController < ApplicationController
 
   def show
     @campus = Campus.find(params[:id])
