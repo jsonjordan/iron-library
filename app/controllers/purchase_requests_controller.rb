@@ -5,7 +5,7 @@ class PurchaseRequestsController < ApplicationController
   end
 
   def index
-    @prs = PurchaseRequest.all
+    @prs = PurchaseRequest.where(campus_id: params[:campu_id])
   end
 
   def new
