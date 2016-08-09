@@ -5,15 +5,22 @@ class PurchaseRequestsController < ApplicationController
   end
 
   def index
-    @prs = PurchaseRequest.where(campus_id: params[:campu_id])
+    @campus = Campus.find params[:campu_id]
+    @prs = PurchaseRequest.where(campus_id: params[:campu_id]).includes(:user)
   end
 
   def new
-    @pr = PurchaseRequest.new
+    @campus = Campus.find params[:campu_id]
+    @pr = @campus.purchase_requests.new
   end
 
   def create
-    pr = PurchaseRequest.new approved_params
+    pr = current_user.purchase_requests.new approved_params
+    gb = GetBook.new pr.isbn
+    book = gb.title_author
+    pr.title = book.first
+    pr.author = book.last
+    pr.status = "pending"
     if pr.save
       flash[:notice] = "Purchase Request Made!"
       redirect_to campus_path
@@ -34,5 +41,11 @@ class PurchaseRequestsController < ApplicationController
     else
       render :edit
     end
+  end
+
+  private
+
+  def approved_params
+    params.require(:purchase_request).permit(:isbn, :klass, :campus_id)
   end
 end

@@ -27,7 +27,7 @@ class GetBook
     if !good_reads["best_book"]["image_url"].match(/nophoto/).present?
       pic_url = good_reads["best_book"]["image_url"].gsub(/(?<=[0-9])m/, "l")
     elsif open_lib_pic.code == 200
-      pic_url = "http://covers.openlibrary.org/b/isbn/#{isbn}-M.jpg"
+      pic_url = "http://covers.openlibrary.org/b/isbn/#{@isbn}-M.jpg"
     else
       pic_url = "/no-cover.gif"
     end
@@ -41,5 +41,19 @@ class GetBook
                      cover_url: pic_url,
                      data: r)
     book
+  end
+
+  def title_author
+    info = []
+    response = HTTParty.get("http://www.goodreads.com/search/index.xml",
+    :query => { :q => @isbn,
+                :key => ENV["goodreads_key"],
+                :field => 'isbn' })
+
+    goodreads = response["GoodreadsResponse"]["search"]["results"]["work"]["best_book"]
+
+    info.push(goodreads["title"])
+    info.push(goodreads["author"]["name"])
+    info
   end
 end

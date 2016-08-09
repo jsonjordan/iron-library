@@ -1,0 +1,14 @@
+<h4>Request a book for TIY <%= @campus.city %></h4>
+<%= bootstrap_form_for @pr, url: campu_purchase_requests_path do |f| %>
+  <%= f.text_field :isbn, label: "ISBN number (no dashes)" %>
+  <%= f.select :klass,
+            options_for_select([['Rails', 'rails'],
+                                ['Python', 'python'],
+                                ['C#', 'c#'],
+                                ['Front End', 'front end'],
+                                ['User Interface', 'user interface'],
+                                ['Java', 'java'],
+                                ['Mobile', 'mobile']]), :include_blank => 'Select Class' %>
+  <%= f.hidden_field :campus_id, value: @campus.id %>
+  <button class="btn btn-primary btn-sm">Submit</button>
+<% end %>
