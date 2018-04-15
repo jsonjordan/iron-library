@@ -5,7 +5,8 @@ class GetBook
   end
 
   def find
-    response = HTTParty.get("http://isbndb.com/api/v2/json/#{ENV["isbndb_key"]}/book/#{@isbn}")
+    response = HTTParty.get("http://api.isbndb.com/book/#{@isbn}",
+      :headers => { 'X-API-KEY' => ENV["isbndb_key"]})
 
     response2 = HTTParty.get("http://www.goodreads.com/search/index.xml",
     :query => { :q => @isbn,
@@ -14,15 +15,15 @@ class GetBook
 
     open_lib_pic = HTTParty.get("http://covers.openlibrary.org/b/isbn/#{@isbn}-M.jpg?default=false")
 
-    r = JSON.parse(response)
-
     good_reads = response2["GoodreadsResponse"]["search"]["results"]["work"]
 
-    if r["error"]
-      isbndb = ""
-    else
-      isbndb = r["data"].first["summary"]
-    end
+    # if r["error"]
+    #   isbndb = ""
+    # else
+    #   isbndb = r["data"].first["summary"]
+    # end
+
+    isbndb = 'Book summary not avaliabe at this time'
 
     if !good_reads["best_book"]["image_url"].match(/nophoto/).present?
       pic_url = good_reads["best_book"]["image_url"].gsub(/(?<=[0-9])m/, "l")
@@ -39,7 +40,7 @@ class GetBook
                      year_of_publication: good_reads["original_publication_year"],
                      gr_rating: good_reads["average_rating"],
                      cover_url: pic_url,
-                     data: r)
+                     data: response2 )
     book
   end
 
