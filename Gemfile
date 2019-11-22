@@ -50,7 +50,7 @@ end
 gem 'roo'
 gem 'figaro'
 gem 'rails-erd'
-gem 'devise'
+gem "devise", "4.4.1"
 gem 'pundit'
 gem 'twitter-bootstrap-rails'
 gem 'bootstrap_form'
