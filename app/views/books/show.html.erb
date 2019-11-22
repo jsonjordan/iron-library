@@ -12,26 +12,28 @@
         </ul>
       </div>
       <div class="button-container">
-        Status: <%= @book.status %> -
-        <% if @book.status == "in" %>
-          <%= button_to "Checkout", book_checkouts_path(@book), class: "btn btn-info btn-xs" %>
-        <% else %>
-          <%= button_to "Reserve", book_reservations_path(@book), class: "btn btn-primary btn-xs", data: "#{@book.id}" %>
+        Status: <%= @book.status %>
+        <% if @current_user %> -
+          <% if @book.status == "in" %>
+            <%= button_to "Checkout", book_checkouts_path(@book), class: "btn btn-info btn-xs" %>
+          <% else %>
+            <%= button_to "Reserve", book_reservations_path(@book), class: "btn btn-primary btn-xs", data: "#{@book.id}" %>
+          <% end %>
+          <div> <!--padding-->
+            <ul>
+            </ul>
+          </div>
+          <div>
+            <%= button_to "Write Review", new_book_review_path(@book), class: "btn btn-success btn-sm", method: "get" %>
+          </div>
+          <div> <!--padding-->
+            <ul>
+            </ul>
+          </div>
+          <div>
+            <%= button_to "Delete", book_path(@book), class: "btn btn-danger btn-sm", method: "delete" %>
+          </div>
         <% end %>
-        <div> <!--padding-->
-          <ul>
-          </ul>
-        </div>
-        <div>
-          <%= button_to "Write Review", new_book_review_path(@book), class: "btn btn-success btn-sm", method: "get" %>
-        </div>
-        <div> <!--padding-->
-          <ul>
-          </ul>
-        </div>
-        <div>
-          <%= button_to "Delete", book_path(@book), class: "btn btn-danger btn-sm", method: "delete" %>
-        </div>
       </div>
     </div>
     <div class="col-lg-7">
