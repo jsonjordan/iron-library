@@ -47,5 +47,4 @@ class ReviewsController < ApplicationController
     params.require(:review).permit(:content, :user_id, :response)
   end
 
-
 end
