@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', function() {
+$(document).on("page:change", function() {
   var bookCount = $("#book-count")
   var currentBooks = $("#current-books")
 

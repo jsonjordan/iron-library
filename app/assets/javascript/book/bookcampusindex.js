@@ -1,7 +1,6 @@
-$(document).on('turbolinks:load', function() {
+$(document).on("page:change", function() {
   var bookCount = $("#book-count")
   var currentBooks = $("#current-books")
-  console.log('This part is working')
 
 
   if($('body').is('.BookCampusIndex')){
@@ -16,6 +15,7 @@ $(document).on('turbolinks:load', function() {
 var getBooksCampus = function() {
   var bookCount = $("#book-count")
   var currentBooks = $("#current-books")
+  console.log('This part is working')
 
   $.ajax("/books.json", {
     success: function(data) {

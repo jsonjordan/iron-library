@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', function() {
+$(document).on("page:change", function() {
   var userCount = $("#user-count")
   var currentUsers = $("#current-users")
 
