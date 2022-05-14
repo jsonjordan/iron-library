@@ -12,7 +12,7 @@ class BooksController < ApplicationController
 
   def search
     if params[:criteria]
-      @books = Book.search_by_all(params[:criteria])
+      @books = PgSearch.multisearch(params[:criteria])
     end
   end
 

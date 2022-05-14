@@ -1,10 +1,10 @@
-$(document).on("page:change", function() {
+$(document).on('turbolinks:load', function() {
   var bookCount = $("#book-count")
   var currentBooks = $("#current-books")
 
 
-  if($('body').is('.BookCampusIndex')){
-    getBooksCampus()
+  if($('body').is('.BookIndex')){
+    getBooks()
 
 
   }
@@ -12,7 +12,7 @@ $(document).on("page:change", function() {
 })
 
 
-var getBooksCampus = function() {
+var getBooks = function() {
   var bookCount = $("#book-count")
   var currentBooks = $("#current-books")
 
@@ -40,6 +40,10 @@ var getBooksCampus = function() {
           bookCategory.text(book.category)
           newItem.append(bookCategory)
 
+          var bookCampus = $("<td>")
+          bookCampus.text(book.campus)
+          newItem.append(bookCampus)
+
           var bookStatus = $("<td>")
           bookStatus.text(book.status)
           newItem.append(bookStatus)
@@ -66,7 +70,7 @@ var getBooksCampus = function() {
         currentBooks.append(newItem)
       }
 
-      listenForBookDeletes()
+      listenForBookGotos()
 
 
     },
@@ -76,17 +80,9 @@ var getBooksCampus = function() {
   })
 }
 
-function listenForBookDeletes() {
-  $(".delete-book").click(function() {
-    console.log("delete clicked")
+function listenForBookGotos() {
+  $(".goto-book").click(function() {
     var bookId = $(this).data("book-id")
-    $.ajax("/books/" + bookId + ".json", {
-      method: "DELETE",
-      success: function() {
-        $("#current-books").empty(),
-        getBooks()
-      },
-      error: function() { alert("Did not delete") }
-    })
+
   })
 }

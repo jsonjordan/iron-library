@@ -11,31 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160809224003) do
+ActiveRecord::Schema.define(version: 20220514211255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pg_trgm"
   enable_extension "fuzzystrmatch"
 
-  create_table "books", force: :cascade do |t|
-    t.string   "isbn"
-    t.string   "title"
-    t.string   "author"
-    t.string   "category",            default: ""
-    t.string   "year_of_publication"
-    t.string   "status",              default: "in"
-    t.text     "summary"
-    t.text     "data"
-    t.integer  "campus_id"
-    t.string   "gr_rating"
-    t.string   "cover_url"
-    t.boolean  "confirmed",           default: false
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-  end
-
-  add_index "books", ["campus_id"], name: "index_books_on_campus_id", using: :btree
+# Could not dump table "books" because of following FrozenError
+#   can't modify frozen String: "false"
 
   create_table "campus", force: :cascade do |t|
     t.string   "street_address"
@@ -59,6 +43,16 @@ ActiveRecord::Schema.define(version: 20160809224003) do
 
   add_index "checkouts", ["book_id"], name: "index_checkouts_on_book_id", using: :btree
   add_index "checkouts", ["user_id"], name: "index_checkouts_on_user_id", using: :btree
+
+  create_table "pg_search_documents", force: :cascade do |t|
+    t.text     "content"
+    t.integer  "searchable_id"
+    t.string   "searchable_type"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "pg_search_documents", ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable_type_and_searchable_id", using: :btree
 
   create_table "purchase_requests", force: :cascade do |t|
     t.string   "isbn"

@@ -1,7 +1,7 @@
 class Book < ActiveRecord::Base
-  include PgSearch
+  include PgSearch::Model
 
-  pg_search_scope :search_by_all, :against => [:title, :isbn, :author],
+  multisearchable :against => [:title, :isbn, :author],
                                   :using => [#:tsearch => {:prefix => true, :any_word => true},
                                               #:trigram #,
                                               :dmetaphone
