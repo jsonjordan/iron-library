@@ -2,12 +2,19 @@ $(document).on("page:change", function() {
   var bookCount = $("#book-count")
   var currentBooks = $("#current-books")
 
+  setTimeout(function(){
+    if($('body').is('.BookCampusIndex')){
+      getBooksCampus()
+  
+  
+    }
+  }, 2000);
 
-  if($('body').is('.BookCampusIndex')){
-    getBooksCampus()
+  // if($('body').is('.BookCampusIndex')){
+  //   getBooksCampus()
 
 
-  }
+  // }
 
 })
 
@@ -15,7 +22,7 @@ $(document).on("page:change", function() {
 var getBooksCampus = function() {
   var bookCount = $("#book-count")
   var currentBooks = $("#current-books")
-  console.log('This part is working')
+  console.log('This part is')
 
   $.ajax("/books.json", {
     success: function(data) {

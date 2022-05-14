@@ -1,13 +1,20 @@
-$(document).on("page:change", function() {
+$(document).on('turbolinks:load', function() {
   var bookCount = $("#book-count")
   var currentBooks = $("#current-books")
 
+  setTimeout(function(){
+    if($('body').is('.BookCampusIndex')){
+      getBooks()
+  
+  
+    }
+  }, 2000);
 
-  if($('body').is('.BookIndex')){
-    getBooks()
+  // if($('body').is('.BookIndex')){
+  //   getBooks()
 
 
-  }
+  // }
 
 })
 
