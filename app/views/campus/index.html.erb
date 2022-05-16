@@ -14,13 +14,15 @@
   </thead>
   <tbody>
     <% @campuses.each do |c| %>
-      <th><%= c.city %></th>
-      <th><%= c.librarian %></th>
-      <th><%= c.books.count %></th>
-      <th class="button-container">
-        <%= button_to('Go To Library', "/campus/#{c.id}/books", class: 'btn btn-xs btn-primary', method: :get) %>
-        <%= button_to('Go To Campus Info', campu_path(c), class: 'btn btn-xs btn-info', method: :get) %>
-      </th>
+      <tr>
+        <th><%= c.city %></th>
+        <th><%= c.librarian %></th>
+        <th><%= c.books.count %></th>
+        <th class="button-container">
+          <%= button_to('Go To Library', "/campus/#{c.id}/books", class: 'btn btn-xs btn-primary', method: :get) %>
+          <%= button_to('Go To Campus Info', campu_path(c), class: 'btn btn-xs btn-info', method: :get) %>
+        </th>
+      </tr>
     <% end %>
   </tbody>
 </table>

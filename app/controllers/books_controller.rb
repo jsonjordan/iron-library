@@ -18,6 +18,7 @@ class BooksController < ApplicationController
 
   def campus_index
     @books = Book.where(campus_id: params[:campu_id], confirmed: true)
+    @campus = @books&.first&.campus || Campus.find(params[:campu_id])
   end
 
   def new
