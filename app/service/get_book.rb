@@ -35,6 +35,12 @@ class GetBook
       pic_url = "/no-cover.gif"
     end
 
+    if book_info['description']
+      book_summary = book_info['description']
+    else
+      book_summary = 'Book summary not available at this time'
+    end
+
     book = Book.create(isbn: @isbn,
                      title: book_info['title'],
                      author: book_info['authors'][0],
