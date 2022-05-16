@@ -1,11 +1,11 @@
 class Book < ActiveRecord::Base
   include PgSearch::Model
 
-  multisearchable :against => [:title, :isbn, :author],
-                                  :using => [#:tsearch => {:prefix => true, :any_word => true},
+  pg_search_scope :search_by_all, :against => [:title, :isbn, :author],
+                                  :using => {:tsearch => {:prefix => true, :any_word => true}
                                               #:trigram #,
-                                              :dmetaphone
-                                            ]
+                                              # :dmetaphone
+}
 
   validates_presence_of :isbn
 
