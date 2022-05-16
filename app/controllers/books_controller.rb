@@ -27,7 +27,7 @@ class BooksController < ApplicationController
 
   def confirm
     @campus = Campus.find params[:campu_id]
-    gb = GetBook.new(params[:book][:isbn])
+    gb = GetBook.new(params[:isbn])
     @book = gb.find
 
     unless @book.present?

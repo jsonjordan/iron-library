@@ -37,8 +37,14 @@ class PurchaseRequestsController < ApplicationController
   def update
     @pr = PurchaseRequest.find(params[:id])
     if @pr.update approved_params
-      flash[:notice] = "Purchase Request updated!"
-      redirect_to campu_purchase_requests_path(@pr.campus_id)
+      if approved_params[:status] == 'purchased'
+        gb = GetBook.new(@pr.isbn)
+        book = gb.find
+        redirect_to book_confirm_path(@pr.campus_id, isbn: book.isbn)
+      else
+        flash[:notice] = "Purchase Request updated!"
+        redirect_to campu_purchase_requests_path(@pr.campus_id)
+      end
     else
       render :edit
     end
