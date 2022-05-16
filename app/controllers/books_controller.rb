@@ -7,7 +7,7 @@ class BooksController < ApplicationController
   end
 
   def index
-    @books = Book.where(confirmed: true)
+    @books = Book.where(confirmed: true).order(:title)
   end
 
   def search
@@ -17,7 +17,7 @@ class BooksController < ApplicationController
   end
 
   def campus_index
-    @books = Book.where(campus_id: params[:campu_id], confirmed: true)
+    @books = Book.where(campus_id: params[:campu_id], confirmed: true).order(:title)
     @campus = @books&.first&.campus || Campus.find(params[:campu_id])
   end
 
