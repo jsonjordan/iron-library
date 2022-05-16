@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all.includes(:campus)
+    @users = User.all.includes(:campus).order(:campus_id)
   end
 
   def destroy

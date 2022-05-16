@@ -8,6 +8,7 @@
   <table class="table table-hover table-striped table-condensed">
     <thead>
       <tr>
+        <th>Name</th>
         <th>Email</th>
         <th>Campus</th>
         <th>Class</th>
@@ -15,7 +16,19 @@
         <th></th>
       </tr>
     </thead>
-    <tbody  id="current-users"></tbody>
+    <tbody>
+    <% @users.each do |u| %>
+      </tr>
+        <th><%= u.name %></th>
+        <th><%= u.email %></th>
+        <th><%= u.campus.city %></th>
+        <th><%= u.klass %></th>
+        <th><%= u.slack_name %></th>
+      </tr>
+      <% end %>
+      </tbody>
   </table>
 
 </body>
+
+
