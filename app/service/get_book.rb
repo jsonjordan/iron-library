@@ -51,6 +51,34 @@ class GetBook
     book
   end
 
+  def update
+    response = HTTParty.get("https://www.googleapis.com/books/v1/volumes?q=isbn:#{@isbn}")
+
+    book_info = response['items'][0]['volumeInfo']
+
+    if book_info['imageLinks']
+      pic_url = book_info['imageLinks']['thumbnail']
+    else
+      pic_url = "/no-cover.gif"
+    end
+
+    if book_info['description']
+      book_summary = book_info['description']
+    else
+      book_summary = 'Book summary not available at this time'
+    end
+
+    book = Book.find_by(isbn: @isbn)
+    book = book.update(
+                     title: book_info['title'],
+                     author: book_info['authors'][0],
+                     summary: book_summary,
+                     year_of_publication: book_info['publishedDate'],
+                     cover_url: pic_url,
+                     data: response
+                     )
+  end
+
   def title_author
     info = []
     response = HTTParty.get("https://www.googleapis.com/books/v1/volumes?q=isbn:#{@isbn}")
