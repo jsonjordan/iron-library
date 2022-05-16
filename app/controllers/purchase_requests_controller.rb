@@ -3,7 +3,7 @@ class PurchaseRequestsController < ApplicationController
   def index
     @campus = Campus.find params[:campu_id]
     @prs = PurchaseRequest.where(campus_id: params[:campu_id], status: "pending").includes(:user)
-    @prs_past = PurchaseRequest.where(campus_id: params[:campu_id]).where.not(status: "pending").includes(:user)
+    @prs_past = PurchaseRequest.where(campus_id: params[:campu_id]).where.not(status: "pending")
   end
 
   def user_index

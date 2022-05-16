@@ -41,10 +41,7 @@
   <thead>
     <tr>
       <th>Book Title</th>
-      <th>Book Author</th>
       <th>Book ISBN</th>
-      <th>Subject Area</th>
-      <th>Made By</th>
       <th>Status</th>
     </tr>
   </thead>
@@ -52,10 +49,7 @@
     <% @prs_past.each do |p| %>
     </tr>
       <th><%= p.title %></th>
-      <th><%= p.author %></th>
       <th><%= p.isbn %></th>
-      <th><%= p.klass %></th>
-      <th><%= p.user.email %></th>
       <th><%= p.status %></th>
     </tr>
     <% end %>
